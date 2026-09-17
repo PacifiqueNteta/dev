@@ -981,6 +981,16 @@ section{ position: relative; }
 }
 .social-round a:hover{ background: var(--primary-dark); transform: translateY(-3px); }
 .footer-links li{ margin-bottom: 14px; }
+.footer-links .link-bullet{
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  color: var(--primary);
+}
+.footer-links a:hover .link-bullet{
+  color: var(--primary-dark);
+}
+
 .footer-links a{ color: var(--gray-700); transition: color var(--transition); display: inline-flex; gap: 8px; }
 .footer-links a:hover{ color: var(--primary); }
 .footer-contact li{ display: flex; gap: 12px; margin-bottom: 18px; color: var(--gray-700); }

@@ -10,24 +10,27 @@
   'use strict';
 
   document.addEventListener('DOMContentLoaded', () => {
+    // ===== Initialisation =====
     initPreloader();
     initHeaderScroll();
     initMobileMenu();
     initSmoothScrollAndSpy();
     initTabs();
+    initExperienceToggle();
     initTypewriter();
-    initScrollReveal(); // sets up IntersectionObserver used by skills/counters too
+    initScrollReveal();
     initSkillBars();
     initCounters();
     initTestimonialCarousel();
     initContactForm();
     initBackToTop();
     initProjectFilter();
+
     const yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
   });
 
-  /* ---------------- Preloader ---------------- */
+  /* ===== Core UI / layout ===== */
   function initPreloader() {
     const pre = document.getElementById('preloader');
     if (!pre) return;
@@ -50,11 +53,17 @@
     window.addEventListener('scroll', toggle, { passive: true });
   }
 
-  /* ---------------- Mobile menu ---------------- */
+  /* ===== Mobile menu ===== */
   function initMobileMenu() {
     const btn = document.getElementById('hamburger');
     const nav = document.getElementById('mainNav');
     if (!btn || !nav) return;
+
+    const closeMenu = () => {
+      nav.classList.remove('open');
+      btn.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    };
 
     btn.addEventListener('click', () => {
       const isOpen = nav.classList.toggle('open');
@@ -62,27 +71,19 @@
       btn.setAttribute('aria-expanded', String(isOpen));
     });
 
-    // Close on link click (mobile)
     nav.querySelectorAll('.nav-link').forEach((link) => {
-      link.addEventListener('click', () => {
-        nav.classList.remove('open');
-        btn.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
-      });
+      link.addEventListener('click', closeMenu);
     });
 
-    // Close on outside click
-    document.addEventListener('click', (e) => {
+    document.addEventListener('click', (event) => {
       if (!nav.classList.contains('open')) return;
-      if (!nav.contains(e.target) && !btn.contains(e.target)) {
-        nav.classList.remove('open');
-        btn.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
+      if (!nav.contains(event.target) && !btn.contains(event.target)) {
+        closeMenu();
       }
     });
   }
 
-  /* ---------------- Smooth scroll + scrollspy ---------------- */
+  /* ===== Smooth scroll + scrollspy ===== */
   function initSmoothScrollAndSpy() {
     const navLinks = Array.from(document.querySelectorAll('.nav-link'));
     const header = document.getElementById('siteHeader');
@@ -124,7 +125,7 @@
     sections.forEach((s) => spy.observe(s));
   }
 
-  /* ---------------- Tabs (About section) ---------------- */
+  /* ===== About tabs ===== */
   function initTabs() {
     const buttons = document.querySelectorAll('.tab-btn');
     if (!buttons.length) return;
@@ -133,10 +134,11 @@
       btn.addEventListener('click', () => {
         const target = btn.dataset.tab;
 
-        buttons.forEach((b) => {
-          const active = b === btn;
-          b.classList.toggle('active', active);
-          b.setAttribute('aria-selected', String(active));
+        buttons.forEach((button) => {
+          const active = button === btn;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-selected', String(active));
+          button.setAttribute('tabindex', active ? '0' : '-1');
         });
 
         document.querySelectorAll('.tab-panel').forEach((panel) => {
@@ -149,7 +151,7 @@
     });
   }
 
-  /* ---------------- Typewriter effect (hero) ---------------- */
+  /* ===== Hero typewriter ===== */
   function initTypewriter() {
     const el = document.getElementById('typedText');
     if (!el) return;
@@ -179,7 +181,21 @@
     tick();
   }
 
-  /* ---------------- Scroll reveal (generic fade-up) ---------------- */
+  /* ===== Experience toggle ===== */
+  function initExperienceToggle() {
+    const expToggle = document.getElementById('expToggle');
+    if (!expToggle) return;
+
+    expToggle.addEventListener('click', () => {
+      const expanded = expToggle.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.exp-extra').forEach((item) => item.classList.toggle('show', !expanded));
+      expToggle.setAttribute('aria-expanded', String(!expanded));
+      const toggleText = expToggle.querySelector('.exp-toggle-text');
+      if (toggleText) toggleText.textContent = expanded ? 'Show more' : 'Show less';
+    });
+  }
+
+  /* ===== Scroll reveal ===== */
   function initScrollReveal() {
     const items = document.querySelectorAll('[data-reveal]');
     if (!items.length) return;
@@ -194,13 +210,13 @@
       },
       { threshold: 0.15 }
     );
-    items.forEach((item, i) => {
-      item.style.transitionDelay = `${Math.min(i % 3, 2) * 0.1}s`;
+    items.forEach((item, index) => {
+      item.style.transitionDelay = `${Math.min(index % 3, 2) * 0.1}s`;
       observer.observe(item);
     });
   }
 
-  /* ---------------- Skill bars (animate width on view) ---------------- */
+  /* ===== Skill bars ===== */
   function initSkillBars() {
     const panel = document.getElementById('tab-skills');
     if (!panel) return;
@@ -230,7 +246,7 @@
     });
   }
 
-  /* ---------------- Counters (stats section) ---------------- */
+  /* ===== Counters ===== */
   function initCounters() {
     const counters = document.querySelectorAll('.counter');
     if (!counters.length) return;
@@ -246,7 +262,7 @@
       },
       { threshold: 0.4 }
     );
-    counters.forEach((c) => observer.observe(c));
+    counters.forEach((counter) => observer.observe(counter));
   }
 
   function animateNumber(el, from, to, duration, suffix = '', useComma = false) {
@@ -421,7 +437,7 @@
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   }
 
-  /* ---------------- Project filter (Projects page only) ---------------- */
+  /* ===== Project filters ===== */
   function initProjectFilter() {
     const filterBar = document.getElementById('projectFilters');
     const grid = document.getElementById('allProjectsGrid');
@@ -431,19 +447,25 @@
     const cards = Array.from(grid.querySelectorAll('.portfolio-item'));
 
     buttons.forEach((btn) => {
+      btn.setAttribute('aria-pressed', String(btn.classList.contains('active')));
       btn.addEventListener('click', () => {
-        buttons.forEach((b) => b.classList.toggle('active', b === btn));
+        buttons.forEach((button) => {
+          const active = button === btn;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-pressed', String(active));
+        });
+
         const filter = btn.dataset.filter;
         cards.forEach((card) => {
-          const cats = (card.dataset.category || '').split(' ');
-          const show = filter === 'all' || cats.includes(filter);
+          const categories = (card.dataset.category || '').split(' ');
+          const show = filter === 'all' || categories.includes(filter);
           card.style.display = show ? '' : 'none';
         });
       });
     });
   }
 
-  /* ---------------- Hero picture on scroll ---------------- */
+  /* ===== Accessibility / misc ===== */
   /* Reference video showed the hero photo scrolling normally with the page —
      no parallax, pin, or shrink/fade. So the photo just uses the existing
      one-time fade-up reveal (via [data-reveal], set up in initScrollReveal)

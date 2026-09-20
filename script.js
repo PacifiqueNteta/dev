@@ -1,11 +1,3 @@
-/* ==========================================================================
-   Pacifique Nteta — Portfolio — script.js
-   Modules: Preloader, Header scroll, Mobile menu, Smooth scroll + Scrollspy,
-   Tabs, Skill bars, Counters, Certifications carousel, Scroll reveal,
-   Typewriter, Contact form validation, Back to top, Project filter (Projects page).
-   All modules are self-contained and initialised on DOMContentLoaded.
-   ========================================================================== */
-
 (function () {
   'use strict';
 
@@ -465,9 +457,4 @@
     });
   }
 
-  /* ===== Accessibility / misc ===== */
-  /* Reference video showed the hero photo scrolling normally with the page —
-     no parallax, pin, or shrink/fade. So the photo just uses the existing
-     one-time fade-up reveal (via [data-reveal], set up in initScrollReveal)
-     like every other section, and otherwise scrolls like plain content. */
 })();

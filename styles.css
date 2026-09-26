@@ -309,13 +309,13 @@ section{ position: relative; }
 }
 @media (max-width: 620px){
   .hero-title{ font-size: clamp(1.45rem, 7.5vw, 2rem); }
-  .hero-typewriter{ min-height: 3.9em; }   /* 3 lines of headroom on very narrow screens */
-  .hero-text{ font-size: .98rem; }
+  .hero-typewriter{ min-height: 2.9em; }   /* 3 lines of headroom on very narrow screens */
+  .hero-text{ font-size: .82rem; }
   .hero-content{ padding-left: 4px; padding-right: 4px; }
 }
 .hero-typewriter{ display: block; min-height: 1.3em;overflow-wrap: break-word; }
 @media (max-width: 1080px){
-  .hero-typewriter{ min-height: 2.6em; }  /* reserves 2 lines — no vertical jump when it wraps */
+  .hero-typewriter{ min-height: 1.6em; }  /* reserves 2 lines — no vertical jump when it wraps */
 }
 .cursor{ display: inline-block; animation: blink 1s step-end infinite; font-weight: 300; }
 @keyframes blink{ 50%{ opacity: 0; } }
@@ -863,6 +863,12 @@ section{ position: relative; }
 .blog-body h3 a{ transition: color var(--transition); }
 .blog-body h3 a:hover{ color: var(--primary); }
 .blog-body p{ color: var(--gray-500); margin: 0; }
+@media (max-width: 768px) {
+  .blog{ padding: 60px 0; }
+  .blog-grid{ grid-template-columns: 1fr; gap: 20px; }
+  .blog-card img{ height: 200px; }
+  .blog-body{ padding: 20px; }
+}
 /* ---------- 13. Contact ---------- */
 
 /* Main Side-by-Side Grid Container */

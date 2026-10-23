@@ -303,20 +303,15 @@ section{ position: relative; }
 }
 .hero-title{
   color: var(--white);
-  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  font-size: clamp(.85rem, 4.4vw, 1.95rem);
   font-weight: 700;
   margin-bottom: 22px;
 }
 @media (max-width: 620px){
-  .hero-title{ font-size: clamp(1.45rem, 7.5vw, 2rem); }
-  .hero-typewriter{ min-height: 2.9em; }   /* 3 lines of headroom on very narrow screens */
-  .hero-text{ font-size: .82rem; }
+  .hero-text{ font-size: .62rem; }
   .hero-content{ padding-left: 4px; padding-right: 4px; }
 }
-.hero-typewriter{ display: block; min-height: 1.3em;overflow-wrap: break-word; }
-@media (max-width: 1080px){
-  .hero-typewriter{ min-height: 1.6em; }  /* reserves 2 lines — no vertical jump when it wraps */
-}
+.hero-typewriter{ display: block; min-height: 2.5em; white-space: nowrap; }
 .cursor{ display: inline-block; animation: blink 1s step-end infinite; font-weight: 300; }
 @keyframes blink{ 50%{ opacity: 0; } }
 .hero-text{ color: rgba(255,255,255,.9); font-size: 1.05rem;width: 100%; max-width: 520px; }

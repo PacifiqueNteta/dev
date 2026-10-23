@@ -154,7 +154,18 @@
       const current = words[wordIndex];
       if (!deleting) {
         charIndex++;
-        el.textContent = current.slice(0, charIndex);
+        const roleBreak = current === 'An Analytics Engineer'
+          ? current.indexOf('Engineer')
+          : -1;
+        if (roleBreak !== -1 && charIndex > roleBreak) {
+          el.replaceChildren(
+            document.createTextNode(current.slice(0, roleBreak)),
+            document.createElement('br'),
+            document.createTextNode(current.slice(roleBreak, charIndex))
+          );
+        } else {
+          el.textContent = current.slice(0, charIndex);
+        }
         if (charIndex === current.length) {
           deleting = true;
           setTimeout(tick, 1400);
@@ -380,25 +391,53 @@
       return false;
     }
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      let allValid = true;
-      Object.values(fields).forEach(({ el }) => {
-        if (!validateField(el)) allValid = false;
-      });
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  let allValid = true;
+  Object.values(fields).forEach(({ el }) => {
+    if (!validateField(el)) allValid = false;
+  });
 
-      if (!allValid) {
-        success.hidden = true;
-        return;
-      }
+  if (!allValid) {
+    success.hidden = true;
+    return;
+  }
 
-      // Simulate a successful send (no backend wired up).
+  const submitBtn = document.getElementById('cf-submit');
+  const originalText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending...';
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      success.textContent = 'Thanks! Your message has been sent successfully.';
       success.hidden = false;
       form.reset();
       Object.values(fields).forEach(({ el }) => el.classList.remove('invalid'));
       setTimeout(() => { success.hidden = true; }, 5000);
-    });
+    } else {
+      const data = await res.json().catch(() => ({}));
+      success.textContent = data.errors
+        ? data.errors.map((err) => err.message).join(', ')
+        : 'Sorry, something went wrong. Please try again or email me directly.';
+      success.hidden = false;
+    }
+  } catch (err) {
+    success.textContent = 'Network error. Please try again or email me directly.';
+    success.hidden = false;
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = originalText;
   }
+});
+}
+  
 
   /* ---------------- Back to top (with scroll-progress ring) ---------------- */
   function initBackToTop() {

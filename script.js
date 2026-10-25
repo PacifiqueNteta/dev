@@ -444,7 +444,7 @@ form.addEventListener('submit', async (e) => {
     const btn = document.getElementById('backToTop');
     if (!btn) return;
     const circle = document.getElementById('scrollProgressCircle');
-    const radius = circle ? circle.r.baseVal.value : 21;
+    const radius = circle ? circle.r.baseVal.value : 21; 
     const circumference = 2 * Math.PI * radius;
 
     if (circle) {

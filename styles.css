@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Pacifique Nteta — Portfolio
+   Pacifique Nteta - Portfolio
    Section grouping by responsibility:
    1. Theme tokens & base styles
    2. Layout helpers
@@ -13,13 +13,13 @@
 
 /* ---------- Theme tokens & base styles ---------- */
 :root{
-  /* Neutral "Slate & Copper" theme — a warm, professional accent that avoids
+  /* Neutral "Slate & Copper" theme - a warm, professional accent that avoids
      the generic BI-tool blue while staying calm and legible. */
   --primary: #00668c;
   --primary-dark: #71c4ef;
   --primary-light: #b6ccd8;
   --primary-lighter: #d4eaf7;
-  --ink: #23262B;       /* dark neutral surface — header/hero/footer-dark */
+  --ink: #23262B;       /* dark neutral surface - header/hero/footer-dark */
   --ink-2: #33363D;      /* lighter dark neutral, for gradients */
   --dark: #262A36;
   --gray-700: #4B4F58;
@@ -251,7 +251,7 @@ section{ position: relative; }
   min-height: 100vh;
   display: flex; align-items: center;
   overflow: hidden;
-  background: linear-gradient(135deg, var(--ink-2), var(--ink));
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
   padding-top: var(--header-h);
 }
 .hero .btn,
@@ -1019,7 +1019,7 @@ section{ position: relative; }
 }
 
 /* ---------- 14. CTA banner ---------- */
-.cta-banner{ background: var(--primary); padding: 56px 0; }
+.cta-banner{ background: var(--primary-dark); padding: 56px 0; }
 .cta-inner{ display: flex; align-items: center; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
 .cta-inner h2{ color: var(--white); font-size: 1.6rem; margin-bottom: 6px; }
 .cta-inner p{ color: rgba(255,255,255,.85); margin: 0; }

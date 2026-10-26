@@ -325,9 +325,9 @@ section{ position: relative; }
 .hero-socials a:hover{ opacity: 1; text-decoration: underline; }
 .hero-socials span{ margin-right: 4px; }
 
-.hero-image{align-self: end; max-width: 400px; }
+.hero-image{align-self: end; max-width: 550px; }
 .hero-image img{
-  max-height: 88vh;
+  max-height: 100vh;
   margin-left: auto;
   border-radius: var(--radius-lg);
   object-fit: cover;

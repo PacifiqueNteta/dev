@@ -83,9 +83,8 @@
       .map((l) => document.getElementById(l.dataset.nav))
       .filter(Boolean);
 
-    // Smooth scroll with header offset (native scroll-behavior handles the
-    // smoothness; we just correct for the fixed header height). Only runs
-    // for links that point to an in-page anchor on this page.
+    // Smooth scroll with header offset. 
+    // Only runs for links that point to an in-page anchor on this page.
     navLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
         const href = link.getAttribute('href') || '';
